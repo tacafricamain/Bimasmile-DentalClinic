@@ -24,8 +24,7 @@ Table of content:
 /* import fonts */
 /* ================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&amp;display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&amp;display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
 /* ================================================== */
 /* import icons */
@@ -45,14 +44,14 @@ Table of content:
 /* ================================================== */
 * {
   /* body font */
-  --body-font: "Inter", Helvetica, Arial, sans-serif;
+  --body-font: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --body-font-size: 16px;
   --body-font-color: #93a0af;
   --body-font-color-dark: rgba(255, 255, 255, .6);
   --body-font-weight: 400;
   /* heading font */
-  --heading-font: "Urbanist", Helvetica, Arial, sans-serif;  
-  --heading-font-weight: 600;
+  --heading-font: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;  
+  --heading-font-weight: 400;
   --heading-font-color: #10244b;
   --heading-text-transform: none;
   /* h1 */
@@ -63,7 +62,7 @@ Table of content:
   --h1-margin-bottom: 20px;
   /* h2 */
   --h2-font: var(--heading-font);
-  --h2-font-size: 48px;
+  --h2-font-size: 40px;
   --h2-font-weight: var(--heading-font-weight);
   --h2-letter-spacing: -0.025em;
   --h2-line-height: 1.2em;
@@ -157,6 +156,7 @@ html {
   overflow-x: hidden;
   padding: 0;
   margin: 0;
+  height: 100%;
 }
 
 body {
@@ -166,8 +166,10 @@ body {
   font-weight: var(--body-font-weight);;
   color: var(--body-font-color);
   padding: 0;
+  margin: 0;
   line-height: 1.9em;
   word-spacing: 0px;
+  min-height: 100vh;
 }
 
 body.dark-scheme {
@@ -12698,4 +12700,175 @@ img {
     margin-left: auto;
     width: auto;
   }
+}
+
+/* ================================================== */
+/* Global 90% Zoom Effect - Component-based Adjustments */
+/* ================================================== */
+
+/* Override CSS variables for 90% effect */
+:root {
+  /* Reduce font sizes by ~10% */
+  --body-font-size: 14.4px; /* was 16px */
+  --h1-font-size: 43.2px; /* was 48px */
+  --h2-font-size: 36px; /* was 40px */
+  --h3-font-size: 28.8px; /* was 32px */
+  --h4-font-size: 21.6px; /* was 24px */
+  --h5-font-size: 16.2px; /* was 18px */
+  --h6-font-size: 14.4px; /* was 16px */
+  --mainmenu-font-size: 13.5px; /* was 15px */
+  --btn-font-size: 13.5px; /* was 15px */
+  
+  /* Reduce spacing and padding by ~10% */
+  --mainmenu-item-padding: 31.5px 0; /* was 35px 0 */
+  --mainmenu-item-padding-hover: 18px 0; /* was 20px 0 */
+  --btn-padding: 5.4px 18px; /* was 6px 20px */
+  --rounded-1: 18px; /* was 20px */
+  --btn-rounded: 7.2px; /* was 8px */
+  
+  /* Reduce container and logo sizes */
+  --container-max-width: 1116px; /* was 1240px */
+  --logo-width: 135px; /* was 150px */
+  --logo-footer-width: 135px; /* was 150px */
+}
+
+/* Reduce section padding and margins */
+section {
+  padding-top: 154px !important; /* ~10% reduction */
+  padding-bottom: 54px !important;
+}
+
+section.padding-top-bottom {
+  padding-top: 72px !important;
+  padding-bottom: 72px !important;
+}
+
+/* Reduce header heights */
+header {
+  height: auto;
+  line-height: 1.7em; /* slightly reduced */
+}
+
+/* Adjust container padding */
+.container {
+  padding-left: 13.5px; /* reduced from 15px */
+  padding-right: 13.5px;
+}
+
+/* Reduce margins for common elements */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 16.2px !important; /* ~10% reduction */
+}
+
+p {
+  margin-bottom: 16.2px !important; /* ~10% reduction */
+}
+
+/* Adjust form elements */
+input, textarea, select {
+  padding: 10.8px 13.5px !important; /* ~10% reduction */
+  font-size: 14.4px !important;
+}
+
+/* Reduce button spacing */
+.btn, button {
+  margin: 4.5px !important; /* reduced spacing */
+}
+
+/* Adjust navigation spacing */
+#mainmenu li {
+  margin: 0 13.5px; /* reduced from typical 15px */
+}
+
+/* Reduce image and media margins */
+img {
+  margin-bottom: 18px; /* reduced margin */
+}
+
+/* Adjust grid and column spacing */
+.row {
+  margin-left: -13.5px;
+  margin-right: -13.5px;
+}
+
+.col, [class*="col-"] {
+  padding-left: 13.5px;
+  padding-right: 13.5px;
+}
+
+/* Reduce card and box padding */
+.card, .box, .feature-box {
+  padding: 27px !important; /* ~10% reduction from typical 30px */
+}
+
+/* Adjust footer spacing */
+footer {
+  padding-top: 45px !important;
+}
+
+/* Responsive adjustments maintain the 90% effect */
+@media only screen and (max-width: 768px) {
+  section {
+    padding-top: 36px !important;
+    padding-bottom: 36px !important;
+  }
+  
+  .container {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  :root {
+    --body-font-size: 13.5px; /* slightly smaller on mobile */
+    --h1-font-size: 32.4px;
+    --h2-font-size: 27px;
+    --h3-font-size: 21.6px;
+  }
+  
+  section {
+    padding-top: 27px !important;
+    padding-bottom: 27px !important;
+  }
+}
+
+/* ================================================== */
+/* Fix Bottom Spacing Issues */
+/* ================================================== */
+
+/* Ensure no extra bottom margins/padding */
+#wrapper {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Remove any bottom spacing from last elements */
+section:last-child,
+footer:last-child,
+.container:last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 50 !important;
+}
+
+/* Specifically target bottom-rounded class that has 200px padding */
+.bottom-rounded {
+  padding-bottom: 180px !important; /* Reduced from 200px */
+}
+
+/* Ensure body and html have no extra spacing */
+html, body {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Remove any potential last-child margins */
+*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Adjust footer to reduce bottom spacing */
+footer {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
