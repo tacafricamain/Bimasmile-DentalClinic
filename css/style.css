@@ -12734,7 +12734,7 @@ img {
 
 /* Reduce section padding and margins */
 section {
-  padding-top: 154px !important; /* ~10% reduction */
+  padding-top: 154px; /* ~10% reduction */
   padding-bottom: 54px !important;
 }
 

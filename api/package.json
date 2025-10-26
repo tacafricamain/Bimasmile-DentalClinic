@@ -1,0 +1,33 @@
+{
+  "name": "bimasmile-whatsapp-api",
+  "version": "1.0.0",
+  "description": "WhatsApp API integration for Bimasmile Dental Clinic booking system.",
+  "main": "whatsapp-server.js",
+  "scripts": {
+    "start": "node whatsapp-server.js",
+    "dev": "nodemon whatsapp-server.js",
+    "test": "node -e \"console.log('WhatsApp API server test')\""
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "cors": "^2.8.5",
+    "twilio": "^4.18.0",
+    "node-fetch": "^2.6.7",
+    "whatsapp-web.js": "^1.21.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": [
+    "whatsapp",
+    "api",
+    "dental",
+    "booking",
+    "appointment"
+  ],
+  "author": "Bimasmile Dental Clinic",
+  "license": "MIT"
+}

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Business Cloud API Setup Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #25D366;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #25D366;
+        }
+        .step h3 {
+            color: #25D366;
+            margin-top: 0;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+        .success {
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #28a745;
+            margin: 10px 0;
+        }
+        .warning {
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #dc3545;
+            margin: 10px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .btn:hover {
+            background: #1ea952;
+        }
+        ol {
+            counter-reset: step-counter;
+        }
+        ol li {
+            counter-increment: step-counter;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 WhatsApp Business Cloud API Setup</h1>
+        <p><strong>FREE Integration for Bimasmile Dental Clinic</strong></p>
+        <p>Follow these steps to get your WhatsApp booking system running in 10 minutes!</p>
+
+        <div class="step">
+            <h3>📋 Step 1: Create Meta Developer Account</h3>
+            <ol>
+                <li><a href="https://developers.facebook.com/" target="_blank" class="btn">Go to Facebook Developers</a></li>
+                <li>Click "Get Started"</li>
+                <li>Log in with your Facebook account</li>
+                <li>Complete any verification steps</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3>🏗️ Step 2: Create WhatsApp Business App</h3>
+            <ol>
+                <li>Click "Create App" on your dashboard</li>
+                <li>Select "Business" as app type</li>
+                <li>Fill in app details:
+                    <div class="code-block">
+App Name: Bimasmile Dental Booking
+Contact Email: your-email@domain.com
+Business Account: Select or create one
+                    </div>
+                </li>
+                <li>Find "WhatsApp" in products and click "Set up"</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3>🔑 Step 3: Get Your API Credentials</h3>
+            <p>In your WhatsApp setup page, you'll see:</p>
+            <div class="highlight">
+                <strong>Access Token:</strong> A long string starting with <code>EAA...</code><br>
+                <strong>Phone Number ID:</strong> A numeric ID like <code>123456789012345</code><br>
+                <strong>Test Phone Number:</strong> A number like <code>+1 555-0199</code>
+            </div>
+            <p><strong>📝 Copy these values - you'll need them in the next step!</strong></p>
+        </div>
+
+        <div class="step">
+            <h3>⚙️ Step 4: Configure Your PHP File</h3>
+            <p>Open <code>api/send-whatsapp-free.php</code> and replace lines 17-18:</p>
+            <div class="code-block">
+// BEFORE (replace these lines):
+$whatsappAccessToken = 'YOUR_FREE_WHATSAPP_ACCESS_TOKEN';
+$phoneNumberId = 'YOUR_FREE_PHONE_NUMBER_ID';
+
+// AFTER (with your actual values):
+$whatsappAccessToken = 'EAAxxxxxxxxxxxxxxxxx'; // Your actual token
+$phoneNumberId = '123456789012345'; // Your actual Phone Number ID
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>🧪 Step 5: Test Your Integration</h3>
+            
+            <h4>Test 1: Send from Meta Dashboard</h4>
+            <ol>
+                <li>In your WhatsApp setup page, find "Send a test message"</li>
+                <li>Add your phone number (with country code: +234xxxxxxxxx)</li>
+                <li>Type a test message and click "Send"</li>
+                <li>Check if you receive it on WhatsApp</li>
+            </ol>
+
+            <h4>Test 2: Test Your Booking Form</h4>
+            <ol>
+                <li>Upload your updated PHP file to your server</li>
+                <li>Go to your booking page</li>
+                <li>Fill out the form completely</li>
+                <li>Click "Send Appointment via WhatsApp"</li>
+                <li>Check browser console for success message</li>
+            </ol>
+        </div>
+
+        <div class="success">
+            <h4>✅ Success Indicators:</h4>
+            <ul>
+                <li><strong>Browser Console:</strong> "✅ WhatsApp sent via: WhatsApp Cloud API (FREE)"</li>
+                <li><strong>WhatsApp:</strong> You receive the formatted appointment message</li>
+                <li><strong>Server Log:</strong> New entry in appointments.log file</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <h4>❌ If Something Goes Wrong:</h4>
+            <ul>
+                <li><strong>"Invalid access token":</strong> Double-check your token from Meta</li>
+                <li><strong>"Phone number not found":</strong> Verify your Phone Number ID</li>
+                <li><strong>"Using redirect fallback":</strong> API credentials not configured correctly</li>
+                <li><strong>No message received:</strong> Check if your phone number is added to test numbers in Meta dashboard</li>
+            </ul>
+        </div>
+
+        <div class="highlight">
+            <h4>💡 Important Notes:</h4>
+            <ul>
+                <li><strong>FREE:</strong> 1,000 messages per month (perfect for dental clinic)</li>
+                <li><strong>Test Phase:</strong> Can only send to numbers added in Meta dashboard</li>
+                <li><strong>Production:</strong> Need business verification for unlimited recipients</li>
+                <li><strong>Fallback:</strong> If API fails, your form still works with wa.me redirect</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>🎯 Your Integration is Ready!</h3>
+            <p>Once configured, your booking system will:</p>
+            <ul>
+                <li>✅ Send professional WhatsApp messages directly</li>
+                <li>✅ Include all appointment details formatted nicely</li>
+                <li>✅ Log all appointments for your records</li>
+                <li>✅ Fall back to redirect if API is unavailable</li>
+                <li>✅ Handle errors gracefully</li>
+            </ul>
+        </div>
+
+        <div class="success">
+            <p><strong>🎉 Congratulations!</strong> Your dental clinic now has professional WhatsApp booking integration that's completely FREE!</p>
+        </div>
+    </div>
+</body>
+</html>

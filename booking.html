@@ -408,23 +408,102 @@
                 
                 // Generate WhatsApp message
                 const whatsappMessage = generateWhatsAppMessage();
+                const formData = getFormData();
                 
-                // Show success state
-                submitBtn.innerHTML = '<i class="fab fa-whatsapp me-2"></i>Redirecting to WhatsApp...';
+                // Show loading state
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending to WhatsApp...';
                 submitBtn.disabled = true;
                 
-                // Send to WhatsApp after short delay
+                // Try to send via FREE WhatsApp API first
+                sendViaWhatsAppAPI(formData, whatsappMessage)
+                    .then(success => {
+                        if (success) {
+                            showSuccessMessage();
+                        } else {
+                            // Fallback to wa.me redirect
+                            fallbackToRedirect(whatsappMessage);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('WhatsApp API error:', error);
+                        // Fallback to wa.me redirect
+                        fallbackToRedirect(whatsappMessage);
+                    });
+            });
+
+            // FREE WhatsApp API integration function
+            async function sendViaWhatsAppAPI(formData, message) {
+                try {
+                    // Using FREE WhatsApp Business Cloud API
+                    const response = await fetch('/api/send-whatsapp-free', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            to: '2349031741426',
+                            message: message,
+                            formData: formData
+                        })
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        console.log('✅ WhatsApp sent via:', result.method);
+                        return true;
+                    }
+                    return false;
+                } catch (error) {
+                    console.log('🔄 API not configured, using redirect fallback');
+                    return false;
+                }
+            }
+
+            // Fallback to redirect method
+            function fallbackToRedirect(whatsappMessage) {
+                submitBtn.innerHTML = '<i class="fab fa-whatsapp me-2"></i>Opening WhatsApp...';
+                
                 setTimeout(() => {
                     const whatsappURL = `https://wa.me/2349031741426?text=${encodeURIComponent(whatsappMessage)}`;
                     window.open(whatsappURL, '_blank');
                     
-                    // Reset button
+                    // Reset button after redirect
                     setTimeout(() => {
                         submitBtn.innerHTML = '<i class="fab fa-whatsapp me-2"></i>Send Appointment via WhatsApp';
                         submitBtn.disabled = false;
                     }, 2000);
                 }, 1000);
-            });
+            }
+
+            // Show success message
+            function showSuccessMessage() {
+                submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Message Sent Successfully!';
+                submitBtn.style.background = '#28a745';
+                
+                // Show success panel
+                document.getElementById('success_message_col').style.display = 'block';
+                document.querySelector('.whatsapp-booking-form').style.display = 'none';
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fab fa-whatsapp me-2"></i>Send Appointment via WhatsApp';
+                    submitBtn.style.background = '';
+                    submitBtn.disabled = false;
+                }, 3000);
+            }
+
+            // Get form data as object
+            function getFormData() {
+                return {
+                    service: document.getElementById('service').value,
+                    date: document.getElementById('date_input').value,
+                    time: document.getElementById('time').value,
+                    name: document.getElementById('name').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    phone: document.getElementById('phone').value.trim(),
+                    message: document.getElementById('message').value.trim()
+                };
+            }
 
             function validateBookingForm() {
                 const service = document.getElementById('service').value;
