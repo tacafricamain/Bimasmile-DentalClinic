@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🔑 Get Permanent WhatsApp Token</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f8f9fa; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; }
+        .step { background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #25D366; }
+        .option { background: #e7f3ff; padding: 15px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #007bff; }
+        .warning { background: #fff3cd; padding: 15px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #ffc107; }
+        .success { background: #d4edda; padding: 15px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #28a745; }
+        h1 { color: #25D366; text-align: center; }
+        h2 { color: #333; }
+        h3 { color: #007bff; margin-top: 0; }
+        code { background: #f8f9fa; padding: 2px 5px; border-radius: 3px; }
+        .btn { display: inline-block; padding: 10px 20px; background: #25D366; color: white; text-decoration: none; border-radius: 5px; margin: 10px 0; }
+        .btn:hover { background: #1ea952; }
+        .btn-secondary { background: #007bff; }
+        .btn-secondary:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔑 Permanent WhatsApp Token Setup</h1>
+        
+        <div class="warning">
+            <h3>⚠️ Current Issue</h3>
+            <p>Your WhatsApp token <strong>expires every 1-2 hours</strong> because it's temporary. For production use, you need a permanent token.</p>
+        </div>
+
+        <h2>🎯 Choose Your Solution:</h2>
+
+        <div class="option">
+            <h3>Option 1: System User Token (Recommended)</h3>
+            <p><strong>✅ Never expires</strong> | <strong>✅ Official Meta solution</strong> | <strong>✅ Most reliable</strong></p>
+            
+            <div class="step">
+                <h4>Step 1: Create System User</h4>
+                <ol>
+                    <li><a href="https://business.facebook.com" target="_blank" class="btn btn-secondary">Go to Facebook Business</a></li>
+                    <li>Go to <strong>Business Settings</strong></li>
+                    <li>Click <strong>Users</strong> → <strong>System Users</strong></li>
+                    <li>Click <strong>Add</strong> to create a system user</li>
+                    <li>Name: "WhatsApp API Bot"</li>
+                    <li>Role: <strong>Admin</strong></li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <h4>Step 2: Generate Permanent Token</h4>
+                <ol>
+                    <li>Click on your new system user</li>
+                    <li>Click <strong>Add Assets</strong></li>
+                    <li>Select <strong>Apps</strong> → Choose your WhatsApp app</li>
+                    <li>Set permissions to <strong>Manage</strong></li>
+                    <li>Click <strong>Generate New Token</strong></li>
+                    <li>Select scopes:
+                        <ul>
+                            <li>✅ <code>whatsapp_business_messaging</code></li>
+                            <li>✅ <code>whatsapp_business_management</code></li>
+                        </ul>
+                    </li>
+                    <li><strong>Copy the token - it never expires!</strong> 🎉</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <h4>Step 3: Update Your Code</h4>
+                <p>In your <code>send-whatsapp-free.php</code> file, replace:</p>
+                <code>$permanentAccessToken = 'YOUR_PERMANENT_SYSTEM_TOKEN_HERE';</code>
+                <p>with your actual permanent token.</p>
+            </div>
+        </div>
+
+        <div class="option">
+            <h3>Option 2: UltraMsg API (Easiest)</h3>
+            <p><strong>✅ No token issues</strong> | <strong>✅ 1,000 free messages</strong> | <strong>✅ 5-minute setup</strong></p>
+            
+            <div class="step">
+                <h4>Quick Setup:</h4>
+                <ol>
+                    <li><a href="https://ultramsg.com" target="_blank" class="btn btn-secondary">Go to UltraMsg</a></li>
+                    <li>Register for free account</li>
+                    <li>Get your <strong>Instance ID</strong> and <strong>Token</strong></li>
+                    <li>Update your PHP file:
+                        <br><code>$ultraMsgToken = 'your_actual_token';</code>
+                        <br><code>$ultraMsgInstance = 'instance12345';</code>
+                    </li>
+                    <li>Test immediately - no Facebook complications!</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="success">
+            <h3>🎯 Recommendation for Your Dental Clinic:</h3>
+            <p><strong>Start with Option 2 (UltraMsg)</strong> - it's simpler and just works. You can always switch to Meta's system user token later if needed.</p>
+            <p>Both options give you <strong>unlimited, never-expiring</strong> access to WhatsApp messaging!</p>
+        </div>
+
+        <div class="step">
+            <h3>🧪 Test Your Setup</h3>
+            <p>After configuring either option:</p>
+            <ol>
+                <li>Go to <code>localhost:8000/booking.html</code></li>
+                <li>Click "Debug API" button</li>
+                <li>Check console for success message</li>
+                <li>Verify WhatsApp message received</li>
+            </ol>
+        </div>
+
+        <div class="warning">
+            <h3>💡 Why Tokens Expire</h3>
+            <p><strong>Security:</strong> Temporary tokens expire to protect against unauthorized access if they're stolen.</p>
+            <p><strong>Testing vs Production:</strong> Meta provides temporary tokens for testing, but expects permanent solutions for production apps.</p>
+        </div>
+    </div>
+</body>
+</html>

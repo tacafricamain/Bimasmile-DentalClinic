@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🔍 WhatsApp Message Debug Tool</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f8f9fa; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; }
+        .issue { background: #fff3cd; padding: 15px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #ffc107; }
+        .solution { background: #d4edda; padding: 15px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #28a745; }
+        .test { background: #e7f3ff; padding: 15px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #007bff; }
+        button { padding: 12px 24px; background: #25D366; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 10px 5px; }
+        button:hover { background: #1ea952; }
+        h1 { color: #25D366; text-align: center; }
+        pre { background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; overflow: auto; font-size: 12px; }
+        .result { background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 8px; min-height: 100px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 "Successful but No Message" Debug Tool</h1>
+        
+        <div class="issue">
+            <h3>❌ Common Issue: API Says "Success" But No WhatsApp Message</h3>
+            <p>This happens when Meta's API accepts the request (HTTP 200) but doesn't actually deliver the message.</p>
+        </div>
+
+        <div class="test">
+            <h3>🧪 Test Your Current Setup</h3>
+            <button onclick="testCurrentAPI()">Test API with Enhanced Debugging</button>
+            <div id="test-result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="solution">
+            <h3>✅ Most Common Causes & Solutions:</h3>
+            
+            <h4>1. Recipient Number Not in Test List</h4>
+            <p><strong>Problem:</strong> Meta requires you to add phone numbers to a test list during development.</p>
+            <p><strong>Solution:</strong></p>
+            <ol>
+                <li>Go to your Meta WhatsApp Business API dashboard</li>
+                <li>Find "Phone numbers" or "Test recipients" section</li>
+                <li>Add <code>+2349031741426</code> to the list</li>
+                <li>Verify the number with OTP if required</li>
+            </ol>
+
+            <h4>2. Phone Number Format Issues</h4>
+            <p><strong>Problem:</strong> Meta is strict about international number format.</p>
+            <p><strong>Current format:</strong> <code>2349031741426</code></p>
+            <p><strong>Try these formats:</strong></p>
+            <ul>
+                <li><code>+2349031741426</code> (with +)</li>
+                <li><code>2349031741426</code> (without +)</li>
+            </ul>
+
+            <h4>3. WhatsApp Business Account Not Verified</h4>
+            <p><strong>Problem:</strong> Unverified business accounts have message restrictions.</p>
+            <p><strong>Solution:</strong> Complete business verification in Meta Business Manager</p>
+
+            <h4>4. Message Template Issues</h4>
+            <p><strong>Problem:</strong> Some regions require approved message templates.</p>
+            <p><strong>Solution:</strong> Use simple text messages for testing</p>
+        </div>
+
+        <div class="test">
+            <h3>🔧 Advanced Debugging</h3>
+            <button onclick="testWithDifferentFormats()">Test Different Phone Formats</button>
+            <button onclick="testSimpleMessage()">Test Simple Message</button>
+            <div id="advanced-result" class="result" style="display:none;"></div>
+        </div>
+    </div>
+
+    <script>
+        async function testCurrentAPI() {
+            const resultDiv = document.getElementById('test-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p>🔄 Testing your current API setup...</p>';
+            
+            try {
+                const response = await fetch('/api/send-whatsapp-free.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        to: '2349031741426',
+                        message: '🧪 ENHANCED DEBUG TEST\n\nThis is testing your permanent token setup.\n\nTime: ' + new Date().toLocaleString(),
+                        formData: { name: 'Debug Test', service: 'API Test' }
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    resultDiv.innerHTML = `
+                        <h4>✅ API Response: SUCCESS</h4>
+                        <p><strong>Method:</strong> ${result.method}</p>
+                        <pre>${JSON.stringify(result, null, 2)}</pre>
+                        <div style="background: #fff3cd; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                            <strong>⚠️ If you don't receive the WhatsApp message:</strong>
+                            <ul>
+                                <li>Check if +2349031741426 is added to test recipients in Meta dashboard</li>
+                                <li>Try a different phone number format</li>
+                                <li>Verify your WhatsApp Business account</li>
+                            </ul>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <h4>❌ API Response: FAILED</h4>
+                        <p><strong>Error:</strong> ${result.error}</p>
+                        <p><strong>Debug Info:</strong></p>
+                        <pre>${JSON.stringify(result.debug || result, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<h4>🔌 Network Error</h4><p>${error.message}</p>`;
+            }
+        }
+
+        async function testWithDifferentFormats() {
+            const resultDiv = document.getElementById('advanced-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p>🔄 Testing different phone number formats...</p>';
+            
+            const formats = [
+                '2349031741426',
+                '+2349031741426', 
+                '09031741426',
+                '+234-903-174-1426'
+            ];
+            
+            let results = [];
+            
+            for (let format of formats) {
+                try {
+                    const response = await fetch('/api/send-whatsapp-free.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            to: format,
+                            message: `📱 Format test: ${format}\nTime: ${new Date().toLocaleTimeString()}`,
+                            formData: { name: 'Format Test' }
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    results.push({
+                        format: format,
+                        success: response.ok && result.success,
+                        response: result
+                    });
+                    
+                    // Wait 2 seconds between tests to avoid rate limits
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    
+                } catch (error) {
+                    results.push({
+                        format: format,
+                        success: false,
+                        error: error.message
+                    });
+                }
+            }
+            
+            let html = '<h4>📱 Phone Number Format Test Results:</h4>';
+            results.forEach(result => {
+                html += `
+                    <div style="background: ${result.success ? '#d4edda' : '#f8d7da'}; padding: 10px; margin: 10px 0; border-radius: 5px;">
+                        <strong>${result.format}:</strong> ${result.success ? '✅ SUCCESS' : '❌ FAILED'}
+                        ${result.success ? '<br>Check your WhatsApp for this message!' : ''}
+                    </div>
+                `;
+            });
+            
+            resultDiv.innerHTML = html;
+        }
+
+        async function testSimpleMessage() {
+            const resultDiv = document.getElementById('advanced-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p>🔄 Testing with simple message...</p>';
+            
+            try {
+                const response = await fetch('/api/send-whatsapp-free.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        to: '2349031741426',
+                        message: 'Simple test message',
+                        formData: { name: 'Simple Test' }
+                    })
+                });
+
+                const result = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <h4>Simple Message Test Result:</h4>
+                    <div style="background: ${response.ok && result.success ? '#d4edda' : '#f8d7da'}; padding: 15px; border-radius: 5px;">
+                        <strong>Status:</strong> ${response.ok && result.success ? '✅ SUCCESS' : '❌ FAILED'}<br>
+                        <strong>Response:</strong> <pre style="margin-top: 10px;">${JSON.stringify(result, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `<h4>❌ Error:</h4><p>${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

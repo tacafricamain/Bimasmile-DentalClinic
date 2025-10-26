@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🔍 WhatsApp API Diagnostic</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 40px; 
+            background: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-box { 
+            background: #f8f9fa; 
+            padding: 20px; 
+            margin: 20px 0; 
+            border-radius: 8px; 
+            border-left: 4px solid #007bff;
+        }
+        .result { 
+            background: #f0f0f0; 
+            padding: 20px; 
+            margin: 20px 0; 
+            border-radius: 8px; 
+            min-height: 100px;
+        }
+        .success { background: #d4edda; border-left: 4px solid #28a745; }
+        .error { background: #f8d7da; border-left: 4px solid #dc3545; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; }
+        button { 
+            padding: 12px 24px; 
+            background: #25D366; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        button:hover { background: #1ea952; }
+        pre { 
+            background: #2d3748; 
+            color: #e2e8f0; 
+            padding: 15px; 
+            border-radius: 5px; 
+            overflow: auto; 
+            font-size: 12px;
+        }
+        .step { margin: 20px 0; }
+        h1 { color: #25D366; text-align: center; }
+        h3 { color: #333; margin-top: 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 WhatsApp API Diagnostic Tool</h1>
+        <p>This will help us figure out why your API is falling back to redirect.</p>
+
+        <div class="step">
+            <div class="test-box">
+                <h3>Step 1: Check if API endpoint exists</h3>
+                <button onclick="checkEndpoint()">Test API Endpoint</button>
+                <div id="endpoint-result" class="result" style="display:none;"></div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="test-box">
+                <h3>Step 2: Test API with sample data</h3>
+                <button onclick="testAPI()">Send Test Message</button>
+                <div id="api-result" class="result" style="display:none;"></div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="test-box">
+                <h3>Step 3: Check server logs</h3>
+                <button onclick="checkLogs()">Check Debug Logs</button>
+                <div id="logs-result" class="result" style="display:none;"></div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="test-box">
+                <h3>Step 4: Manual Verification</h3>
+                <p>Check these manually on your server:</p>
+                <ul>
+                    <li>✅ Is <code>api/send-whatsapp-free.php</code> uploaded?</li>
+                    <li>✅ Does your server support PHP and cURL?</li>
+                    <li>✅ Are there any server errors in error logs?</li>
+                    <li>✅ Is the file path correct: <code>/api/send-whatsapp-free</code>?</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function checkEndpoint() {
+            const resultDiv = document.getElementById('endpoint-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p>🔄 Checking if API endpoint exists...</p>';
+            
+            try {
+                // Try to reach the endpoint with GET request (should return method not allowed)
+                const response = await fetch('/api/send-whatsapp-free.php', {
+                    method: 'GET'
+                });
+                
+                if (response.status === 405) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        <h4>✅ API Endpoint Found!</h4>
+                        <p>Status: ${response.status} (Method Not Allowed - This is expected for GET requests)</p>
+                        <p>The API file exists and is responding correctly.</p>
+                    `;
+                } else {
+                    resultDiv.className = 'result warning';
+                    resultDiv.innerHTML = `
+                        <h4>⚠️ Unexpected Response</h4>
+                        <p>Status: ${response.status}</p>
+                        <p>The endpoint exists but returned an unexpected status.</p>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `
+                    <h4>❌ API Endpoint Not Found</h4>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p><strong>This means:</strong></p>
+                    <ul>
+                        <li>The file <code>api/send-whatsapp-free.php</code> is not uploaded to your server</li>
+                        <li>The path is incorrect</li>
+                        <li>There's a server configuration issue</li>
+                    </ul>
+                    <p><strong>Solution:</strong> Upload the PHP file to your server in the <code>api/</code> folder</p>
+                `;
+            }
+        }
+
+        async function testAPI() {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p>🔄 Testing API with sample data...</p>';
+            
+            const testData = {
+                to: '2349031741426',
+                message: '🧪 API TEST\\n\\nThis is a diagnostic test from your WhatsApp API!\\n\\nTime: ' + new Date().toLocaleString(),
+                formData: {
+                    name: 'Test User',
+                    service: 'General Dentistry',
+                    date: '10/31/2025',
+                    time: '15:00',
+                    email: 'test@example.com',
+                    phone: '09031741426'
+                }
+            };
+            
+            try {
+                const response = await fetch('/api/send-whatsapp-free.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        <h4>✅ API SUCCESS!</h4>
+                        <p><strong>Method:</strong> ${result.method}</p>
+                        <p><strong>Message:</strong> ${result.message}</p>
+                        <p>🎉 Your WhatsApp API is working! Check your phone for the test message.</p>
+                        <p><strong>Why is the form still redirecting?</strong> There might be a JavaScript issue in your booking form.</p>
+                    `;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `
+                        <h4>❌ API Failed - This is why it's redirecting!</h4>
+                        <p><strong>Status:</strong> ${response.status}</p>
+                        <p><strong>Error:</strong> ${result.error || 'Unknown error'}</p>
+                        <p><strong>Attempts:</strong> ${(result.attempts || []).join(', ')}</p>
+                        <h4>Debug Information:</h4>
+                        <pre>${JSON.stringify(result.debug || result, null, 2)}</pre>
+                        <h4>Common Solutions:</h4>
+                        <ul>
+                            <li>Add your phone number (+2349031741426) to test recipients in Meta dashboard</li>
+                            <li>Generate a new access token from Meta developers</li>
+                            <li>Check if your WhatsApp Business API setup is complete</li>
+                        </ul>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `
+                    <h4>❌ Network Error</h4>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p>This could mean the API file is not uploaded or there's a server issue.</p>
+                `;
+            }
+        }
+
+        async function checkLogs() {
+            const resultDiv = document.getElementById('logs-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p>🔄 Attempting to check server logs...</p>';
+            
+            try {
+                // Try to fetch debug logs (this might not work on all servers)
+                const response = await fetch('/api/debug.log');
+                if (response.ok) {
+                    const logs = await response.text();
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        <h4>📋 Debug Logs Found</h4>
+                        <pre>${logs}</pre>
+                    `;
+                } else {
+                    resultDiv.className = 'result warning';
+                    resultDiv.innerHTML = `
+                        <h4>⚠️ Cannot Access Logs</h4>
+                        <p>Debug logs are not publicly accessible (this is normal for security).</p>
+                        <p>To check logs manually:</p>
+                        <ul>
+                            <li>Check your server file manager for <code>debug.log</code></li>
+                            <li>Check <code>appointments.log</code> for error details</li>
+                            <li>Check your server's error logs</li>
+                        </ul>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.className = 'result warning';
+                resultDiv.innerHTML = `
+                    <h4>📋 Log Check Result</h4>
+                    <p>Cannot access logs directly (this is normal for security).</p>
+                    <p>Please check your server file manager for these log files:</p>
+                    <ul>
+                        <li><code>api/debug.log</code> - API attempt details</li>
+                        <li><code>api/appointments.log</code> - Success/failure logs</li>
+                        <li>Server error logs - Check your hosting control panel</li>
+                    </ul>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
