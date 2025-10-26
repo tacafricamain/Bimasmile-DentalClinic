@@ -12851,6 +12851,163 @@ footer:last-child,
   padding-bottom: 50 !important;
 }
 
+    .mini-social-float {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 9999;
+    }
+
+    .social-cluster {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: float-gentle 3s ease-in-out infinite;
+    }
+
+    @keyframes float-gentle {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+    }
+
+    .mini-social-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .mini-social-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 12px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .mini-social-btn:hover::before {
+        opacity: 1;
+    }
+
+    .mini-social-btn:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* WhatsApp */
+    .whatsapp {
+        color: #25D366;
+        background: rgba(37, 211, 102, 0.1) !important;
+    }
+    .whatsapp::before {
+        background: linear-gradient(135deg, #25D366, #128C7E) !important;
+    }
+    .whatsapp:hover {
+        color: #fff !important;
+    }
+
+    /* Instagram */
+    .instagram {
+        color: #E4405F;
+        background: rgba(228, 64, 95, 0.1);
+    }
+    .instagram::before {
+        background: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF);
+    }
+    .instagram:hover {
+        color: white;
+    }
+
+    /* Facebook */
+    .facebook {
+        color: #1877F2;
+        background: rgba(24, 119, 242, 0.1);
+    }
+    .facebook::before {
+        background: linear-gradient(135deg, #1877F2, #0D47A1);
+    }
+    .facebook:hover {
+        color: white;
+    }
+
+    /* Phone */
+    .phone {
+        color: #FF6B6B;
+        background: rgba(255, 107, 107, 0.1);
+    }
+    .phone::before {
+        background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+    }
+    .phone:hover {
+        color: white;
+    }
+
+    /* Subtle pulse animation for first button (WhatsApp) */
+    .mini-social-btn:first-child {
+        animation: subtle-pulse 2s infinite;
+    }
+
+    @keyframes subtle-pulse {
+        0%, 100% { 
+            box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.3);
+        }
+        50% { 
+            box-shadow: 0 0 0 8px rgba(37, 211, 102, 0);
+        }
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .mini-social-float {
+            right: 15px;
+            bottom: 15px;
+        }
+        
+        .social-cluster {
+            padding: 10px;
+            gap: 6px;
+        }
+        
+        .mini-social-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+        }
+        
+        .mini-social-btn svg {
+            width: 12px;
+            height: 12px;
+        }
+    }
+
+    /* Hover effect for the entire cluster */
+    .social-cluster:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Sequential hover delay for a wave effect */
+    .mini-social-btn:nth-child(1) { transition-delay: 0ms; }
+    .mini-social-btn:nth-child(2) { transition-delay: 50ms; }
+    .mini-social-btn:nth-child(3) { transition-delay: 100ms; }
+    .mini-social-btn:nth-child(4) { transition-delay: 150ms; }
+
 /* Specifically target bottom-rounded class that has 200px padding */
 .bottom-rounded {
   padding-bottom: 180px !important; /* Reduced from 200px */
