@@ -12265,6 +12265,29 @@ img {
     header {
       position: relative !important;
     }
+
+    /* Different mobile logos for homepage vs other pages */
+    /* Homepage mobile logo (darker/main version) - for header without header-light class */
+    header.header-mobile:not(.header-light) .logo-mobile {
+      content: url('../images/logo main-02.png') !important;
+    }
+    
+    /* Light header mobile logo (lighter version for other pages) - for header with header-light class */
+    header.header-mobile.header-light .logo-mobile {
+      content: url('../images/logo-sub02-02.png') !important;
+    }
+    
+    /* Ensure proper logo display on mobile */
+    header.header-mobile .logo-main,
+    header.header-mobile .logo-scroll {
+      display: none !important;
+    }
+    
+    header.header-mobile .logo-mobile {
+      display: inline-block !important;
+      max-height: 40px !important;
+      width: auto !important;
+    }
   }
 
   #mainmenu li ul.mega {
