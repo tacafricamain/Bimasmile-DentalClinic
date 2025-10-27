@@ -383,13 +383,166 @@
             color: white;
         }
 
-        /* Returning user special effects */
-        .welcome-back {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        /* Compact Success Message Styling */
+        .compact-success-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            color: #333;
+            text-align: center;
+            padding: 25px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideInDown 0.6s ease-out;
+            max-width: 100%;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: bounce 1s ease-out;
+        }
+
+        .compact-title {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+
+        .compact-subtitle {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .compact-info {
+            background: rgba(248, 249, 250, 0.8);
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .info-item {
+            font-weight: 500;
+        }
+
+        .compact-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .compact-btn {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .compact-btn:hover {
+            background: rgba(52, 152, 219, 0.2);
+            border-color: rgba(52, 152, 219, 0.4);
+            transform: translateY(-1px);
+            color: #2980b9;
+        }
+
+        .welcome-back {
+            background: rgba(255, 248, 220, 0.95);
+        }
+
+        .welcome-back .compact-btn {
+            background: rgba(255, 193, 7, 0.1);
+            color: #f39c12;
+            border-color: rgba(255, 193, 7, 0.2);
+        }
+
+        .welcome-back .compact-btn:hover {
+            background: rgba(255, 193, 7, 0.2);
+            border-color: rgba(255, 193, 7, 0.4);
+            color: #e67e22;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .compact-success-panel {
+                padding: 20px 15px;
+                margin: 10px;
+            }
+            
+            .success-icon {
+                font-size: 2.5rem;
+                margin-bottom: 12px;
+            }
+            
+            .compact-title {
+                font-size: 1.2rem;
+            }
+            
+            .compact-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .compact-info {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .compact-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out;
         }
     </style>
 
@@ -604,7 +757,7 @@
                 
                 // Direct WhatsApp redirect (simple and reliable)
                 setTimeout(() => {
-                    const whatsappURL = `https://wa.me/2349031741426?text=${encodeURIComponent(whatsappMessage)}`;
+                    const whatsappURL = `https://wa.me/2349025589011?text=${encodeURIComponent(whatsappMessage)}`;
                     window.open(whatsappURL, '_blank');
                     
                     // Show success message
@@ -630,29 +783,18 @@
                 submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>WhatsApp Opened Successfully!';
                 submitBtn.style.background = '#28a745';
                 
-                // Show success panel with cute message
+                // Show compact success panel
                 const successPanel = document.getElementById('success_message_col');
+                const appointmentData = getFormData();
                 successPanel.innerHTML = `
-                    <div class="text-center success-panel">
-                        <div class="success-emoji" style="font-size: 3rem; margin-bottom: 1rem;">🎉</div>
-                        <h3 style="color: #28a745; margin-bottom: 1rem;">Appointment Request Sent!</h3>
-                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
-                            <p style="margin-bottom: 1rem;"><strong>📱 Your WhatsApp should have opened with your appointment details!</strong></p>
-                            <p style="margin-bottom: 1rem;">Simply send the message to complete your booking request.</p>
-                            <div style="background: #e7f3ff; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                                <p style="margin: 0; font-size: 0.9rem; color: #0066cc;">
-                                    <i class="fas fa-info-circle me-2"></i>
-                                    We'll confirm your appointment via WhatsApp shortly!
-                                </p>
-                            </div>
-                        </div>
-                        <div style="margin-top: 2rem;">
-                            <a class="btn-main me-3" href="booking.html">
-                                <i class="fas fa-plus me-2"></i>Book Another Appointment
-                            </a>
-                            <a class="btn-main" href="index.html" style="background: #6c757d;">
-                                <i class="fas fa-home me-2"></i>Back to Home
-                            </a>
+                    <div class="text-center compact-success-panel animate-fadeInUp">
+                        <div class="success-icon">🎉</div>
+                        <h3 class="compact-title">Appointment Sent! 🦷</h3>
+                        <p class="compact-subtitle">Opening WhatsApp...</p>
+                        <div class="compact-info">
+                            <span class="info-item">${appointmentData.name}</span> • 
+                            <span class="info-item">${appointmentData.service}</span> • 
+                            <span class="info-item">${appointmentData.date}</span>
                         </div>
                     </div>
                 `;
@@ -783,41 +925,22 @@
                 });
                 
                 successPanel.innerHTML = `
-                    <div class="text-center success-panel welcome-back">
-                        <div class="success-emoji" style="font-size: 3rem; margin-bottom: 1rem;">👋</div>
-                        <h3 style="color: white; margin-bottom: 1rem;">Welcome Back!</h3>
-                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
-                            <p style="margin-bottom: 1rem;"><strong>📱 You sent an appointment request at ${timeString}</strong></p>
-                            <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #ffc107;">
-                                <h5 style="margin-bottom: 10px; color: #856404;">📋 Your Appointment Details:</h5>
-                                <div style="text-align: left; font-size: 0.9rem;">
-                                    <p style="margin: 5px 0;"><strong>👤 Patient:</strong> ${appointmentData.name}</p>
-                                    <p style="margin: 5px 0;"><strong>🏥 Service:</strong> ${appointmentData.service}</p>
-                                    <p style="margin: 5px 0;"><strong>📅 Date:</strong> ${appointmentData.date}</p>
-                                    <p style="margin: 5px 0;"><strong>⏰ Time:</strong> ${appointmentData.time}</p>
-                                    <p style="margin: 5px 0;"><strong>📱 Phone:</strong> ${appointmentData.phone}</p>
-                                </div>
-                            </div>
-                            <div style="background: #d1ecf1; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                                <p style="margin: 0; font-size: 0.9rem; color: #0c5460;">
-                                    <i class="fas fa-clock me-2"></i>
-                                    <strong>Status:</strong> Waiting for confirmation via WhatsApp
-                                </p>
-                            </div>
+                    <div class="text-center compact-success-panel welcome-back animate-fadeInUp">
+                        <div class="success-icon">👋</div>
+                        <h3 class="compact-title">Welcome Back! 😊</h3>
+                        <p class="compact-subtitle">Your appointment request was sent at ${timeString}</p>
+                        <div class="compact-info">
+                            <span class="info-item">${appointmentData.name}</span> • 
+                            <span class="info-item">${appointmentData.service}</span> <br>
+                            <span class="info-item">${appointmentData.date} at ${appointmentData.time}</span>
                         </div>
-                        <div style="margin-top: 2rem;">
-                            <button onclick="clearAppointmentStatus()" class="btn-main me-3">
-                                <i class="fas fa-plus me-2"></i>Book Another Appointment
+                        <div class="compact-actions">
+                            <button onclick="clearAppointmentStatus()" class="compact-btn">
+                                📅 Book Another
                             </button>
-                            <a class="btn-main" href="index.html" style="background: #6c757d;">
-                                <i class="fas fa-home me-2"></i>Back to Home
+                            <a class="compact-btn" href="tel:+2349031741426">
+                                📞 Call Clinic
                             </a>
-                        </div>
-                        <div style="margin-top: 1rem;">
-                            <small style="color: #6c757d;">
-                                <i class="fas fa-info-circle me-1"></i>
-                                Haven't received a confirmation? Check WhatsApp or try calling us directly.
-                            </small>
                         </div>
                     </div>
                 `;
