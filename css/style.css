@@ -12170,6 +12170,70 @@ img {
     padding-left: 35px !important;
   }
 
+  /* Mobile submenu styles */
+  header.header-mobile #mainmenu > li ul {
+    display: none !important;
+    position: static !important;
+    background: #f8f9fa !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    height: auto !important;
+    border: none !important;
+    width: 100% !important;
+  }
+
+  /* Show submenu when parent is expanded */
+  header.header-mobile #mainmenu > li.submenu-open ul {
+    display: block !important;
+  }
+
+  /* Style submenu items */
+  header.header-mobile #mainmenu ul li {
+    border-bottom: 1px solid #e9ecef !important;
+    float: none !important;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  header.header-mobile #mainmenu ul li:last-child {
+    border-bottom: none !important;
+  }
+
+  header.header-mobile #mainmenu ul li a {
+    padding: 15px 25px 15px 45px !important;
+    font-size: 14px !important;
+    color: #666 !important;
+    font-weight: 400 !important;
+    display: block !important;
+    text-decoration: none !important;
+    background: transparent !important;
+    border: none !important;
+    transition: all 0.3s ease !important;
+  }
+
+  header.header-mobile #mainmenu ul li a:hover {
+    background: #e9ecef !important;
+    color: #007bff !important;
+    padding-left: 55px !important;
+  }
+
+  /* Add arrow indicator for items with submenus */
+  header.header-mobile #mainmenu > li.has-submenu > a:after {
+    content: '\f107' !important;
+    font-family: 'FontAwesome' !important;
+    float: right !important;
+    font-size: 14px !important;
+    transition: transform 0.3s ease !important;
+    color: #666 !important;
+  }
+
+  header.header-mobile #mainmenu > li.has-submenu.submenu-open > a:after {
+    transform: rotate(180deg) !important;
+  }
+
   /* Ensure hamburger button is visible and functional on mobile */
   @media (max-width: 993px) {
     #menu-btn {

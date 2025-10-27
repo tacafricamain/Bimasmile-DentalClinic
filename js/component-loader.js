@@ -144,6 +144,12 @@ function initMobileMenuHandler() {
             jQuery('header').removeClass('menu-open');
             mobile_menu_show = 0;
             jQuery(this).removeClass("menu-open");
+            
+            // Close all open submenus when main menu closes
+            document.querySelectorAll('header #mainmenu > li.submenu-open').forEach(item => {
+                item.classList.remove('submenu-open');
+            });
+            
             console.log('Menu closed'); // Debug log
         }
     });
@@ -158,6 +164,11 @@ function initMobileMenuHandler() {
             jQuery('header').removeClass('menu-open');
             jQuery('#menu-btn').removeClass('menu-open');
             mobile_menu_show = 0;
+            
+            // Close all submenus when switching to desktop
+            document.querySelectorAll('header #mainmenu > li.submenu-open').forEach(item => {
+                item.classList.remove('submenu-open');
+            });
         }
     }
     
@@ -169,12 +180,12 @@ function initMobileMenuHandler() {
 // Mobile Navigation Enhancements
 function initMobileNavEnhancements() {
     // Add click handlers for submenu toggles
-    document.querySelectorAll('header.header-mobile #mainmenu > li').forEach(item => {
+    document.querySelectorAll('header #mainmenu > li').forEach(item => {
         const link = item.querySelector('a');
         const submenu = item.querySelector('ul');
         
         if (submenu) {
-            item.classList.add('has-child');
+            item.classList.add('has-submenu');
             
             // Add click handler for mobile submenu toggle
             link.addEventListener('click', function(e) {
@@ -182,14 +193,16 @@ function initMobileNavEnhancements() {
                     e.preventDefault();
                     
                     // Toggle this submenu
-                    item.classList.toggle('open');
+                    item.classList.toggle('submenu-open');
                     
                     // Close other submenus
-                    document.querySelectorAll('header.header-mobile #mainmenu > li.open').forEach(openItem => {
+                    document.querySelectorAll('header #mainmenu > li.submenu-open').forEach(openItem => {
                         if (openItem !== item) {
-                            openItem.classList.remove('open');
+                            openItem.classList.remove('submenu-open');
                         }
                     });
+                    
+                    console.log('Submenu toggled for:', link.textContent); // Debug log
                 }
             });
         }
