@@ -340,6 +340,15 @@
                     submitButton.classList.add('loading');
                     submitButton.value = 'Sending...';
                     
+                    // Ensure button is reset after timeout even if something goes wrong
+                    const resetButton = () => {
+                        submitButton.classList.remove('loading');
+                        submitButton.value = 'Send Message';
+                    };
+                    
+                    // Fallback timeout to reset button
+                    const fallbackTimeout = setTimeout(resetButton, 5000);
+                    
                     // Create WhatsApp message
                     const whatsappMessage = createWhatsAppMessage(formData);
                     
@@ -357,13 +366,19 @@
                     
                     // Redirect to WhatsApp after a short delay
                     setTimeout(() => {
-                        const whatsappUrl = `https://wa.me/2348012345678?text=${encodeURIComponent(whatsappMessage)}`;
-                        window.open(whatsappUrl, '_blank');
-                        
-                        // Reset form
-                        contactForm.reset();
-                        submitButton.classList.remove('loading');
-                        submitButton.value = 'Send Message';
+                        try {
+                            const whatsappUrl = `https://wa.me/2349025589011?text=${encodeURIComponent(whatsappMessage)}`;
+                            window.open(whatsappUrl, '_blank');
+                            
+                            // Reset form
+                            contactForm.reset();
+                        } catch (error) {
+                            console.error('Error opening WhatsApp:', error);
+                        } finally {
+                            // Clear fallback timeout and reset button state
+                            clearTimeout(fallbackTimeout);
+                            resetButton();
+                        }
                     }, 2000);
                 });
             }
@@ -375,9 +390,13 @@
             const phone = document.getElementById('phone').value.trim();
             const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value.trim();
+            const submitButton = document.getElementById('send_message');
             
             if (!name || !email || !phone || !subject || !message) {
                 alert('Please fill in all required fields.');
+                // Reset button if validation fails
+                submitButton.classList.remove('loading');
+                submitButton.value = 'Send Message';
                 return false;
             }
             
@@ -385,6 +404,9 @@
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 alert('Please enter a valid email address.');
+                // Reset button if validation fails
+                submitButton.classList.remove('loading');
+                submitButton.value = 'Send Message';
                 return false;
             }
             
