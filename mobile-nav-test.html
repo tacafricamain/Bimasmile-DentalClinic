@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Nav Test</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="fonts/fontawesome4/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <style>
+        body { margin: 0; padding: 0; }
+        .test-info {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 99999;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Header Component Placeholder -->
+        <div id="header-placeholder"></div>
+        
+        <div style="padding: 20px; margin-top: 100px;">
+            <h1>Mobile Navigation Test</h1>
+            <p>This page tests the mobile navigation. Try resizing your browser to mobile width or use developer tools mobile mode.</p>
+            <p>You should see a hamburger menu button (☰) on mobile screens. Click it to toggle the navigation menu.</p>
+            
+            <div class="test-info">
+                <div>Screen Width: <span id="screen-width"></span>px</div>
+                <div>Header Classes: <span id="header-classes">Loading...</span></div>
+                <div>Menu Button Visible: <span id="menu-btn-visible">Loading...</span></div>
+                <div>Menu Visible: <span id="menu-visible">Loading...</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/plugins.js"></script>
+    <script src="js/designesia.js"></script>
+    <script src="js/component-loader.js"></script>
+    
+    <script>
+        // Debug information
+        function updateDebugInfo() {
+            document.getElementById('screen-width').textContent = window.innerWidth;
+            
+            const header = document.querySelector('header');
+            if (header) {
+                document.getElementById('header-classes').textContent = header.className || 'none';
+            }
+            
+            const menuBtn = document.getElementById('menu-btn');
+            const menuBtnStyle = menuBtn ? window.getComputedStyle(menuBtn) : null;
+            document.getElementById('menu-btn-visible').textContent = 
+                menuBtn && menuBtnStyle ? menuBtnStyle.display : 'not found';
+                
+            const mainMenu = document.getElementById('mainmenu');
+            const menuStyle = mainMenu ? window.getComputedStyle(mainMenu) : null;
+            document.getElementById('menu-visible').textContent = 
+                mainMenu && menuStyle ? menuStyle.display : 'not found';
+        }
+        
+        // Update debug info periodically
+        setInterval(updateDebugInfo, 1000);
+        
+        // Add click handler for menu button when loaded
+        setTimeout(() => {
+            const menuBtn = document.getElementById('menu-btn');
+            if (menuBtn) {
+                menuBtn.addEventListener('click', function() {
+                    console.log('Menu button clicked!');
+                    setTimeout(updateDebugInfo, 100);
+                });
+            }
+        }, 2000);
+        
+        // Listen for window resize
+        window.addEventListener('resize', updateDebugInfo);
+    </script>
+</body>
+</html>

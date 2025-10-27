@@ -40,7 +40,7 @@
         /* Modern Booking Section */
         .modern-booking-section {
             background: #f8f9fa;
-            min-height: 100vh;
+            min-height: auto;
         }
 
         .booking-form-container {
@@ -110,10 +110,12 @@
         .booking-image-container {
             position: relative;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            min-height: 500px;
+            max-height: 600px;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
         .booking-hero-image {
@@ -123,6 +125,7 @@
             position: absolute;
             top: 0;
             left: 0;
+            max-height: 600px;
         }
 
         .image-overlay {
@@ -186,6 +189,102 @@
         /* Show subheader */
         #subheader {
             display: block;
+        }
+
+        /* Fix scrollbar issue */
+        html, body {
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            height: auto !important;
+        }
+
+        body {
+            min-height: 100vh !important;
+        }
+
+        #wrapper {
+            overflow-x: hidden !important;
+            overflow-y: visible !important;
+            height: auto !important;
+        }
+
+        /* Prevent container overflow issues */
+        .container {
+            overflow-x: hidden !important;
+            height: auto !important;
+        }
+
+        #content {
+            overflow-x: hidden !important;
+            height: auto !important;
+        }
+
+        /* Ensure sections don't create extra height */
+        section {
+            overflow-x: hidden !important;
+            height: auto !important;
+            min-height: auto !important;
+        }
+
+        /* Remove any fixed heights that might cause scrolling */
+        .no-bottom.no-top {
+            min-height: auto !important;
+        }
+
+        /* Mobile-specific image and layout changes */
+        @media (max-width: 991.98px) {
+            /* Hide the right-side image section on mobile */
+            .booking-right-image {
+                display: none !important;
+            }
+            
+            /* Show mobile-only image */
+            .mobile-booking-image {
+                display: block !important;
+                margin-top: 30px;
+            }
+            
+            /* Make form take full width on mobile */
+            .booking-form-col {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        /* Hide mobile image on desktop */
+        @media (min-width: 992px) {
+            .mobile-booking-image {
+                display: none !important;
+            }
+        }
+
+        /* Mobile booking image styling */
+        .mobile-booking-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .mobile-booking-image img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .mobile-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0,123,255,0.8), rgba(108,117,125,0.8));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
         }
 
         /* Form field styling to match the design */
@@ -328,7 +427,7 @@
                 <div class="container relative z-2">
                     <div class="row g-4 gx-5 justify-content-between">
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 booking-form-col">
                             <div class="relative">
                                 <div id="success_message_col" class='success p-40 h-100' style="display: none;">
                                     <h3>Appointment Request Sent!</h3>
@@ -415,10 +514,26 @@
                                     </div>
 
                                 </form>
+
+                                <!-- Mobile-only image (hidden on desktop) -->
+                                <div class="mobile-booking-image">
+                                    <img src="images/misc/s4.webp" alt="Dental Care">
+                                    <div class="mobile-image-overlay">
+                                        <div>
+                                            <div class="d-flex justify-content-center align-items-center mb-3">
+                                                <i class="fs-60 text-white icon_clock me-3"></i>
+                                                <div>
+                                                    <h4 class="mb-0 text-white">Opening Hours</h4>
+                                                    <p class="mb-0 text-white">Mon to Sat 09:00am - 05:00pm</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 booking-right-image">
                             <div class="h-100 rounded-1 relative" data-bgimage="url(images/misc/s4.webp) center">
                                 <div class="bg-blur text-light shadow-1 abs start-10 bottom-10 p-4 rounded-1 overflow-hidden z-2" data-wow-delay=".5s">
                                     <div class="d-flex justify-content-center">

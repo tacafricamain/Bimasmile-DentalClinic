@@ -11590,6 +11590,12 @@ img {
 
 @media only screen and (max-width: 992px) {
 
+  /* Mobile Navigation Button Fix */
+  #menu-btn {
+    display: block !important;
+    color: #333 !important;
+  }
+
   .container{
     max-width: 100%;
   }  
@@ -12108,6 +12114,93 @@ img {
   header.header-light.header-mobile #mainmenu>li>span.active,
   header.header-light.header-mobile #mainmenu li>ul>li>span.active {
     background: url(../images/ui/arrow-up.png) center no-repeat;
+  }
+
+  /* CRITICAL: Mobile Menu Show/Hide Fix - Override existing mobile CSS */
+  header.header-mobile #mainmenu {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    position: fixed !important;
+    top: 70px !important;
+    left: 0 !important;
+    width: 100% !important;
+    background: #fff !important;
+    z-index: 9999 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.15) !important;
+    max-height: calc(100vh - 70px) !important;
+    overflow-y: auto !important;
+    transform: translateY(-20px) !important;
+    transition: all 0.3s ease !important;
+  }
+
+  header.header-mobile.menu-open #mainmenu {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Override existing mobile menu item styles */
+  header.header-mobile #mainmenu > li {
+    float: none !important;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+  }
+
+  header.header-mobile #mainmenu > li > a {
+    display: block !important;
+    padding: 18px 25px !important;
+    color: #333 !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    border: none !important;
+    text-decoration: none !important;
+    background: transparent !important;
+    transition: all 0.3s ease !important;
+  }
+
+  header.header-mobile #mainmenu > li > a:hover {
+    background: #f8f9fa !important;
+    color: #007bff !important;
+    padding-left: 35px !important;
+  }
+
+  /* Ensure hamburger button is visible and functional on mobile */
+  @media (max-width: 993px) {
+    #menu-btn {
+      display: block !important;
+      color: #333 !important;
+      z-index: 10001 !important;
+      cursor: pointer !important;
+      float: right !important;
+      width: 32px !important;
+      height: 32px !important;
+      padding: 4px !important;
+      text-align: center !important;
+      margin-top: 0px !important;
+      margin-left: 20px !important;
+    }
+    
+    #menu-btn:before {
+      font-family: FontAwesome !important;
+      content: "\f0c9" !important;
+      font-size: 20px !important;
+      color: #333 !important;
+    }
+    
+    #menu-btn.menu-open:before {
+      content: "\f068" !important;
+    }
+    
+    /* Ensure header has mobile class on small screens */
+    header {
+      position: relative !important;
+    }
   }
 
   #mainmenu li ul.mega {
