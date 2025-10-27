@@ -59,41 +59,127 @@
 
     <!-- Contact Form WhatsApp Integration Styles -->
     <style>
-        /* Success Message Styling */
-        .success-panel {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        /* Compact Success Message Styling */
+        .compact-success-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border-radius: 15px;
-            color: white;
+            color: #333;
             text-align: center;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+            padding: 25px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             animation: slideInDown 0.6s ease-out;
+            max-width: 100%;
         }
 
-        .success-panel h3 {
-            color: white;
-            margin-bottom: 20px;
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: bounce 1s ease-out;
+        }
+
+        .compact-title {
+            color: #2c3e50;
+            margin-bottom: 8px;
             font-weight: 600;
+            font-size: 1.3rem;
         }
 
-        .success-panel p {
-            color: rgba(255,255,255,0.9);
-            font-size: 16px;
-            margin-bottom: 25px;
+        .compact-subtitle {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
         }
 
-        .success-panel .btn-main {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 12px 30px;
+        .compact-info {
+            background: rgba(248, 249, 250, 0.8);
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .info-item {
+            font-weight: 500;
+        }
+
+        .compact-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .compact-btn {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
             transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-block;
         }
 
-        .success-panel .btn-main:hover {
-            background: rgba(255,255,255,0.3);
-            border-color: rgba(255,255,255,0.5);
-            transform: translateY(-2px);
+        .compact-btn:hover {
+            background: rgba(52, 152, 219, 0.2);
+            border-color: rgba(52, 152, 219, 0.4);
+            transform: translateY(-1px);
+            color: #2980b9;
+        }
+
+        .welcome-back {
+            background: rgba(255, 248, 220, 0.95);
+        }
+
+        .welcome-back .compact-btn {
+            background: rgba(255, 193, 7, 0.1);
+            color: #f39c12;
+            border-color: rgba(255, 193, 7, 0.2);
+        }
+
+        .welcome-back .compact-btn:hover {
+            background: rgba(255, 193, 7, 0.2);
+            border-color: rgba(255, 193, 7, 0.4);
+            color: #e67e22;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .compact-success-panel {
+                padding: 20px 15px;
+                margin: 10px;
+            }
+            
+            .success-icon {
+                font-size: 2.5rem;
+                margin-bottom: 12px;
+            }
+            
+            .compact-title {
+                font-size: 1.2rem;
+            }
+            
+            .compact-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .compact-info {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .compact-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
         }
 
         /* Animation for success message */
@@ -134,12 +220,33 @@
         @keyframes pulse {
             0% {
                 transform: scale(1);
+                opacity: 1;
             }
             50% {
-                transform: scale(1.05);
+                transform: scale(1.2);
+                opacity: 0.7;
             }
             100% {
                 transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes wave {
+            0%, 100% { 
+                transform: rotate(0deg); 
+            }
+            10%, 30% { 
+                transform: rotate(-10deg); 
+            }
+            20% { 
+                transform: rotate(12deg); 
+            }
+            40%, 60% { 
+                transform: rotate(9deg); 
+            }
+            50% { 
+                transform: rotate(-9deg); 
             }
         }
 
@@ -411,20 +518,13 @@ ${data.message}
             const contactFormDiv = document.querySelector('.whatsapp-contact-form');
             
             successPanel.innerHTML = `
-                <div class="text-center success-panel animate-fadeInUp">
-                    <div class="success-emoji" style="font-size: 3rem; margin-bottom: 1rem;">📧</div>
-                    <h3 style="color: white; margin-bottom: 1rem;">Message Sent!</h3>
-                    <p style="margin-bottom: 1.5rem;">Your message is being sent to WhatsApp...</p>
-                    <div class="animate-pulse" style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <p style="margin: 5px 0; color: white;"><strong>📋 Subject:</strong> ${contactData.subject}</p>
-                        <p style="margin: 5px 0; color: white;"><strong>👤 Name:</strong> ${contactData.name}</p>
-                        <p style="margin: 5px 0; color: white;"><strong>📱 Phone:</strong> ${contactData.phone}</p>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
-                        <p style="margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.9);">
-                            <i class="fas fa-paper-plane me-2"></i>
-                            <strong>Status:</strong> Redirecting to WhatsApp...
-                        </p>
+                <div class="text-center compact-success-panel animate-fadeInUp">
+                    <div class="success-icon">✅</div>
+                    <h3 class="compact-title">Message Sent! 🎉</h3>
+                    <p class="compact-subtitle">Opening WhatsApp...</p>
+                    <div class="compact-info">
+                        <span class="info-item">${contactData.name}</span> • 
+                        <span class="info-item">${contactData.subject}</span>
                     </div>
                 </div>
             `;
@@ -449,34 +549,21 @@ ${data.message}
                     const contactFormDiv = document.querySelector('.whatsapp-contact-form');
                     
                     successPanel.innerHTML = `
-                        <div class="text-center success-panel welcome-back">
-                            <div class="success-emoji" style="font-size: 3rem; margin-bottom: 1rem;">👋</div>
-                            <h3 style="color: white; margin-bottom: 1rem;">Welcome Back!</h3>
-                            <p style="margin-bottom: 1.5rem;">We received your message about <strong>"${data.subject}"</strong></p>
-                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
-                                <p style="margin: 5px 0; color: white;"><strong>📧 Subject:</strong> ${data.subject}</p>
-                                <p style="margin: 5px 0; color: white;"><strong>👤 Name:</strong> ${data.name}</p>
-                                <p style="margin: 5px 0; color: white;"><strong>📱 Phone:</strong> ${data.phone}</p>
+                        <div class="text-center compact-success-panel welcome-back animate-fadeInUp">
+                            <div class="success-icon">👋</div>
+                            <h3 class="compact-title">Welcome Back! 😊</h3>
+                            <p class="compact-subtitle">We got your message about "${data.subject}"</p>
+                            <div class="compact-info">
+                                <span class="info-item">${data.name}</span> • 
+                                <span class="info-item">We'll respond soon!</span>
                             </div>
-                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
-                                <p style="margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.9);">
-                                    <i class="fas fa-clock me-2"></i>
-                                    <strong>Status:</strong> We'll respond via WhatsApp soon!
-                                </p>
-                            </div>
-                            <div style="margin-top: 2rem;">
-                                <button onclick="clearContactStatus()" class="btn-main me-3" style="background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3);">
-                                    <i class="fas fa-plus me-2"></i>Send Another Message
+                            <div class="compact-actions">
+                                <button onclick="clearContactStatus()" class="compact-btn">
+                                    ✉️ New Message
                                 </button>
-                                <a class="btn-main" href="index.html" style="background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3);">
-                                    <i class="fas fa-home me-2"></i>Back to Home
+                                <a class="compact-btn" href="tel:+2349025589011">
+                                    📞 Call Now
                                 </a>
-                            </div>
-                            <div style="margin-top: 1rem;">
-                                <small style="color: rgba(255,255,255,0.8);">
-                                    <i class="fas fa-info-circle me-1"></i>
-                                    Haven't received a response? Try calling us directly.
-                                </small>
                             </div>
                         </div>
                     `;
