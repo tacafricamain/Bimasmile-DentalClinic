@@ -57,6 +57,119 @@
     <!-- color scheme -->
     <link id="colors" href="css/colors/scheme-01.css" rel="stylesheet" type="text/css" >
 
+    <!-- Contact Form WhatsApp Integration Styles -->
+    <style>
+        /* Success Message Styling */
+        .success-panel {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+            animation: slideInDown 0.6s ease-out;
+        }
+
+        .success-panel h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .success-panel p {
+            color: rgba(255,255,255,0.9);
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .success-panel .btn-main {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px 30px;
+            transition: all 0.3s ease;
+        }
+
+        .success-panel .btn-main:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Animation for success message */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .success-emoji {
+            animation: bounce 2s infinite;
+        }
+
+        .success-panel.welcome-back {
+            background: linear-gradient(135deg, #007bff 0%, #6610f2 100%);
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Loading state */
+        .btn-main.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .btn-main.loading:after {
+            content: " ⏳";
+        }
+    </style>
+
 </head>
 
 <body>
@@ -93,7 +206,7 @@
                             <div class="subtitle">Get In Touch</div>
                             <h2 class="wow fadeInUp">We are always ready to help you and answer your questions</h2>
 
-                            <p>Whether you have a question, a suggestion, or just want to say hello, this is the place to do it. Please fill out the form below with your details and message, and we'll get back to you as soon as possible.</p>
+                            <p>Whether you have a question, a suggestion, or just want to say hello, this is the place to do it. Please fill out the form with your details and message, and we'll get back to you as soon as possible.</p>
 
                             <div class="row g-4 gx-5">
                                 <div class="col-lg-6">
@@ -113,7 +226,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="fw-bold text-dark"><i class="icofont-envelope me-2 id-color-2"></i>Send a Message</div>
-                                    bimasmiledentalclinic@gmail.com     
+                                    <a href="mailto:bimasmiledentalclinic@gmail.com">bimasmiledentalclinic@gmail.com</a>     
                                 </div>
                             </div>
 
@@ -122,38 +235,60 @@
                         </div>
 
                         <div class="col-lg-6">
-                            <div class="p-40 bg-color-op-1 rounded-1">
-                                <h3>Get In Touch</h3>
-                                <form name="contactForm" id="contact_form" method="post" action="https://madebydesignesia.com/themes/dentia/contact.php">
+                            <div class="relative">
+                                <div id="success_message_col" class='success p-40 h-100' style="display: none;">
+                                    <h3>Message Sent Successfully!</h3>
+                                    <p>Your message has been sent to WhatsApp. We'll get back to you as soon as possible.</p>
+                                    <a class="btn-main" href="contact.html">Send Another Message</a>
+                                </div>
 
-                                    <div class="mb-4">
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" required>
-                                    </div>
+                                <div class="p-40 bg-color-op-1 rounded-1 whatsapp-contact-form">
+                                    <h3><i class="fa fa-envelope-o id-color me-2"></i>Get In Touch</h3>
+                                    <p>Send us a message and we'll respond via WhatsApp as soon as possible!</p>
+                                    
+                                    <form name="contactForm" id="contact_form" class="whatsapp-contact-form">
 
-                                    <div class="mb-4">
-                                        <input type="text" name="email" id="email" class="form-control" placeholder="Your Email" required>
-                                    </div>
+                                        <div class="mb-4">
+                                            <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" required>
+                                        </div>
 
-                                    <div class="mb-4">
-                                        <input type="text" name="phone" id="phone" class="form-control" placeholder="Your Phone" required>
-                                    </div>
+                                        <div class="mb-4">
+                                            <input type="email" name="email" id="email" class="form-control" placeholder="Your Email" required>
+                                        </div>
 
-                                    <div class="mb-4 mb20">
-                                        <textarea name="message" id="message" class="form-control" placeholder="Your Message" required></textarea>
-                                    </div>
+                                        <div class="mb-4">
+                                            <input type="tel" name="phone" id="phone" class="form-control" placeholder="Your Phone" required>
+                                        </div>
 
+                                        <div class="mb-4">
+                                            <select name="subject" id="subject" class="form-control" required>
+                                                <option disabled selected value="">Select Subject</option>
+                                                <option value="General Inquiry">General Inquiry</option>
+                                                <option value="Appointment Request">Appointment Request</option>
+                                                <option value="Treatment Question">Treatment Question</option>
+                                                <option value="Emergency Consultation">Emergency Consultation</option>
+                                                <option value="Insurance & Payment">Insurance & Payment</option>
+                                                <option value="Complaint/Feedback">Complaint/Feedback</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
 
-                                    <div id='submit' class="mt20">
-                                        <input type='submit' id='send_message' value='Send Message' class="btn-main">
-                                    </div>
+                                        <div class="mb-4 mb20">
+                                            <textarea name="message" id="message" class="form-control" placeholder="Your Message" rows="5" required></textarea>
+                                        </div>
 
-                                    <div id="success_message" class='success'>
-                                        Your message has been sent successfully. Refresh this page if you want to send more messages.
-                                    </div>
-                                    <div id="error_message" class='error'>
-                                        Sorry there was an error sending your form.
-                                    </div>
-                                </form>
+                                        <div id='submit' class="mt20">
+                                            <input type='submit' id='send_message' value='Send Message' class="btn-main">
+                                        </div>
+
+                                        <div id="success_message" class='success' style="display: none;">
+                                            Your message has been sent successfully. Refresh this page if you want to send more messages.
+                                        </div>
+                                        <div id="error_message" class='error' style="display: none;">
+                                            Sorry there was an error sending your form.
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
 
@@ -172,6 +307,204 @@
     <script src="js/plugins.js"></script>
     <script src="js/designesia.js"></script>
     <script src="js/validation-contact.js"></script>
+    
+    <!-- WhatsApp Contact Form Integration -->
+    <script>
+        // WhatsApp Contact Form functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contact_form');
+            const submitButton = document.getElementById('send_message');
+            
+            // Check for returning user
+            checkReturningUser();
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Validate form
+                    if (!validateContactForm()) {
+                        return;
+                    }
+                    
+                    // Get form data
+                    const formData = {
+                        name: document.getElementById('name').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        phone: document.getElementById('phone').value.trim(),
+                        subject: document.getElementById('subject').value,
+                        message: document.getElementById('message').value.trim()
+                    };
+                    
+                    // Show loading state
+                    submitButton.classList.add('loading');
+                    submitButton.value = 'Sending...';
+                    
+                    // Create WhatsApp message
+                    const whatsappMessage = createWhatsAppMessage(formData);
+                    
+                    // Store contact data in localStorage
+                    const contactData = {
+                        ...formData,
+                        timestamp: new Date().toISOString(),
+                        status: 'sent'
+                    };
+                    localStorage.setItem('contactSent', 'true');
+                    localStorage.setItem('contactData', JSON.stringify(contactData));
+                    
+                    // Show success message with animation
+                    showSuccessMessage(contactData);
+                    
+                    // Redirect to WhatsApp after a short delay
+                    setTimeout(() => {
+                        const whatsappUrl = `https://wa.me/2348012345678?text=${encodeURIComponent(whatsappMessage)}`;
+                        window.open(whatsappUrl, '_blank');
+                        
+                        // Reset form
+                        contactForm.reset();
+                        submitButton.classList.remove('loading');
+                        submitButton.value = 'Send Message';
+                    }, 2000);
+                });
+            }
+        });
+        
+        function validateContactForm() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value.trim();
+            
+            if (!name || !email || !phone || !subject || !message) {
+                alert('Please fill in all required fields.');
+                return false;
+            }
+            
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function createWhatsAppMessage(data) {
+            return `🦷 *CONTACT MESSAGE FROM WEBSITE*
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 *Name:* ${data.name}
+📧 *Email:* ${data.email}
+📱 *Phone:* ${data.phone}
+📋 *Subject:* ${data.subject}
+
+💬 *Message:*
+${data.message}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+⏰ Sent: ${new Date().toLocaleString()}
+🌐 Source: Website Contact Form`;
+        }
+        
+        function showSuccessMessage(contactData) {
+            const successPanel = document.getElementById('success_message_col');
+            const contactFormDiv = document.querySelector('.whatsapp-contact-form');
+            
+            successPanel.innerHTML = `
+                <div class="text-center success-panel animate-fadeInUp">
+                    <div class="success-emoji" style="font-size: 3rem; margin-bottom: 1rem;">📧</div>
+                    <h3 style="color: white; margin-bottom: 1rem;">Message Sent!</h3>
+                    <p style="margin-bottom: 1.5rem;">Your message is being sent to WhatsApp...</p>
+                    <div class="animate-pulse" style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <p style="margin: 5px 0; color: white;"><strong>📋 Subject:</strong> ${contactData.subject}</p>
+                        <p style="margin: 5px 0; color: white;"><strong>👤 Name:</strong> ${contactData.name}</p>
+                        <p style="margin: 5px 0; color: white;"><strong>📱 Phone:</strong> ${contactData.phone}</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <p style="margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.9);">
+                            <i class="fas fa-paper-plane me-2"></i>
+                            <strong>Status:</strong> Redirecting to WhatsApp...
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            successPanel.style.display = 'block';
+            contactFormDiv.style.display = 'none';
+        }
+        
+        function checkReturningUser() {
+            const contactSent = localStorage.getItem('contactSent');
+            const contactData = localStorage.getItem('contactData');
+            
+            if (contactSent && contactData) {
+                const data = JSON.parse(contactData);
+                const sentTime = new Date(data.timestamp);
+                const now = new Date();
+                const timeDiff = (now - sentTime) / (1000 * 60); // difference in minutes
+                
+                // Show returning user message for 30 minutes
+                if (timeDiff < 30) {
+                    const successPanel = document.getElementById('success_message_col');
+                    const contactFormDiv = document.querySelector('.whatsapp-contact-form');
+                    
+                    successPanel.innerHTML = `
+                        <div class="text-center success-panel welcome-back">
+                            <div class="success-emoji" style="font-size: 3rem; margin-bottom: 1rem;">👋</div>
+                            <h3 style="color: white; margin-bottom: 1rem;">Welcome Back!</h3>
+                            <p style="margin-bottom: 1.5rem;">We received your message about <strong>"${data.subject}"</strong></p>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                                <p style="margin: 5px 0; color: white;"><strong>📧 Subject:</strong> ${data.subject}</p>
+                                <p style="margin: 5px 0; color: white;"><strong>👤 Name:</strong> ${data.name}</p>
+                                <p style="margin: 5px 0; color: white;"><strong>📱 Phone:</strong> ${data.phone}</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                                <p style="margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.9);">
+                                    <i class="fas fa-clock me-2"></i>
+                                    <strong>Status:</strong> We'll respond via WhatsApp soon!
+                                </p>
+                            </div>
+                            <div style="margin-top: 2rem;">
+                                <button onclick="clearContactStatus()" class="btn-main me-3" style="background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3);">
+                                    <i class="fas fa-plus me-2"></i>Send Another Message
+                                </button>
+                                <a class="btn-main" href="index.html" style="background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3);">
+                                    <i class="fas fa-home me-2"></i>Back to Home
+                                </a>
+                            </div>
+                            <div style="margin-top: 1rem;">
+                                <small style="color: rgba(255,255,255,0.8);">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Haven't received a response? Try calling us directly.
+                                </small>
+                            </div>
+                        </div>
+                    `;
+                    successPanel.style.display = 'block';
+                    contactFormDiv.style.display = 'none';
+                }
+            }
+        }
+        
+        // Function to clear contact status and show form again
+        window.clearContactStatus = function() {
+            localStorage.removeItem('contactSent');
+            localStorage.removeItem('contactData');
+            document.getElementById('success_message_col').style.display = 'none';
+            document.querySelector('.whatsapp-contact-form').style.display = 'block';
+            
+            // Reset form
+            document.getElementById('contact_form').reset();
+            
+            // Scroll to form
+            document.querySelector('.whatsapp-contact-form').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+    </script>
     
     <!-- Component Loader (Load this last) -->
     <script src="js/component-loader.js"></script>
