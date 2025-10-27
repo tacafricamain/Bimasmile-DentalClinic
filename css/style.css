@@ -12267,26 +12267,38 @@ img {
     }
 
     /* Different mobile logos for homepage vs other pages */
-    /* Homepage mobile logo (darker/main version) - for header without header-light class */
-    header.header-mobile:not(.header-light) .logo-mobile {
-      content: url('../images/logo main-02.png') !important;
+    /* Homepage mobile logo (darker/main version) */
+    header.header-mobile .logo-mobile-homepage {
+      display: inline-block !important;
+      max-height: 40px !important;
+      width: auto !important;
     }
     
-    /* Light header mobile logo (lighter version for other pages) - for header with header-light class */
-    header.header-mobile.header-light .logo-mobile {
-      content: url('../images/logo-sub02-02.png') !important;
+    /* Light header mobile logo (lighter version for other pages) */
+    header.header-mobile .logo-mobile-light {
+      display: inline-block !important;
+      max-height: 40px !important;
+      width: auto !important;
     }
     
-    /* Ensure proper logo display on mobile */
+    /* Hide desktop logos on mobile */
     header.header-mobile .logo-main,
     header.header-mobile .logo-scroll {
       display: none !important;
     }
     
-    header.header-mobile .logo-mobile {
-      display: inline-block !important;
-      max-height: 40px !important;
-      width: auto !important;
+    /* Hide the non-matching mobile logo based on header type */
+    header.header-mobile:not(.header-light) .logo-mobile-light {
+      display: none !important;
+    }
+    
+    header.header-mobile.header-light .logo-mobile-homepage {
+      display: none !important;
+    }
+    
+    /* Fallback for any remaining logo-mobile class */
+    header.header-mobile .logo-mobile:not(.logo-mobile-homepage):not(.logo-mobile-light) {
+      display: none !important;
     }
   }
 
