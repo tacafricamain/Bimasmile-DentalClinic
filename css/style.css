@@ -13372,3 +13372,35 @@ header.header-mobile .mobile-book-appointment .mobile-book-btn:active {
     font-size: 16px !important;
   }
 }
+
+/* Mobile-Only Navigation Item */
+.mobile-only-nav-item {
+  display: none !important;
+}
+
+header.header-mobile .mobile-only-nav-item {
+  display: block !important;
+}
+
+header.header-mobile .mobile-only-nav-item .menu-item {
+  display: block !important;
+  padding: 15px 20px !important;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+  color: white !important;
+  border-radius: 25px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  margin: 10px 20px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(74, 124, 210, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+header.header-mobile .mobile-only-nav-item .menu-item:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(74, 124, 210, 0.4) !important;
+  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%) !important;
+  color: white !important;
+}
