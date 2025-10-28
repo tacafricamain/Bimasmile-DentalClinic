@@ -655,7 +655,7 @@
                             <div class="row g-4 gx-5">
                                 <div class="col-lg-6">
                                     <div class="fw-bold text-dark"><i class="icofont-clock-time me-2 id-color-2"></i>We're Open</div>
-                                    Monday- Saturday : 9am - 6pm, Sunday
+                                    Monday - Saturday : 9am - 5pm, Sunday based on appointment.
                                 </div>
 
                                 <div class="col-lg-6">
@@ -679,9 +679,9 @@
                         </div>
 
                         <div class="col-lg-6">
-                            <div class="p-40 bg-color-op-1 rounded-1">
+                            <div class="p-40 bg-color-op-1 rounded-1 whatsapp-contact-form">
                                 <h3>Get In Touch</h3>
-                                <form name="contactForm" id="contact_form" method="post" action="https://madebydesignesia.com/themes/dentia/contact.php">
+                                <form name="contactForm" id="contact_form" method="post">
 
                                     <div class="mb-4">
                                         <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" required>
@@ -695,22 +695,33 @@
                                         <input type="text" name="phone" id="phone" class="form-control" placeholder="Your Phone" required>
                                     </div>
 
+                                    <div class="mb-4">
+                                        <select name="subject" id="subject" class="form-control" required>
+                                            <option value="">Select Subject</option>
+                                            <option value="General Inquiry">General Inquiry</option>
+                                            <option value="Appointment Request">Appointment Request</option>
+                                            <option value="Treatment Information">Treatment Information</option>
+                                            <option value="Insurance Questions">Insurance Questions</option>
+                                            <option value="Emergency">Emergency</option>
+                                            <option value="Complaint">Complaint</option>
+                                            <option value="Feedback">Feedback</option>
+                                        </select>
+                                    </div>
+
                                     <div class="mb-4 mb20">
                                         <textarea name="message" id="message" class="form-control" placeholder="Your Message" required></textarea>
                                     </div>
-
 
                                     <div id='submit' class="mt20">
                                         <input type='submit' id='send_message' value='Send Message' class="btn-main">
                                     </div>
 
-                                    <div id="success_message" class='success'>
-                                        Your message has been sent successfully. Refresh this page if you want to send more messages.
-                                    </div>
-                                    <div id="error_message" class='error'>
-                                        Sorry there was an error sending your form.
-                                    </div>
                                 </form>
+                            </div>
+                            
+                            <!-- Success Message Panel -->
+                            <div id="success_message_col" class="p-40 bg-color-op-1 rounded-1" style="display: none;">
+                                <!-- Success content will be populated by JavaScript -->
                             </div>
                         </div>
 
@@ -766,8 +777,345 @@
     <script src="js/custom-marquee.js"></script>
     <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?LR-verbose&snipver=1&LiveTest=1"></' + 'script>')</script>
 
+    <!-- Homepage Contact Form WhatsApp Integration -->
+    <style>
+        /* Compact Success Panel Styles */
+        .compact-success-panel {
+            max-width: 100%;
+            padding: 30px 25px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
 
+        .compact-success-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
 
+        .compact-success-panel > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .compact-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .compact-subtitle {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+            color: white;
+        }
+
+        .compact-info {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-item {
+            display: inline-block;
+            margin: 2px 0;
+        }
+
+        .compact-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .compact-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+
+        .compact-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .compact-success-panel {
+                padding: 25px 20px;
+                margin: 0 15px;
+            }
+
+            .compact-title {
+                font-size: 1.3rem;
+            }
+
+            .compact-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .compact-btn {
+                min-width: 140px;
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 20%, 60%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-emoji {
+            animation: bounce 2s infinite;
+        }
+
+        .compact-success-panel.welcome-back {
+            background: linear-gradient(135deg, #007bff 0%, #6610f2 100%);
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Loading state */
+        .btn-main.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .btn-main.loading:after {
+            content: " ⏳";
+        }
+    </style>
+
+    <script>
+        // Homepage Contact Form WhatsApp functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contact_form');
+            const submitButton = document.getElementById('send_message');
+            
+            // Check for returning user
+            checkReturningUser();
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Validate form
+                    if (!validateContactForm()) {
+                        return;
+                    }
+                    
+                    // Get form data
+                    const formData = {
+                        name: document.getElementById('name').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        phone: document.getElementById('phone').value.trim(),
+                        subject: document.getElementById('subject').value,
+                        message: document.getElementById('message').value.trim()
+                    };
+                    
+                    // Create WhatsApp message
+                    const whatsappMessage = createWhatsAppMessage(formData);
+                    
+                    // Store contact data in localStorage
+                    const contactData = {
+                        ...formData,
+                        timestamp: new Date().toISOString(),
+                        status: 'sent'
+                    };
+                    localStorage.setItem('homepageContactSent', 'true');
+                    localStorage.setItem('homepageContactData', JSON.stringify(contactData));
+                    
+                    // Redirect to WhatsApp immediately
+                    const whatsappUrl = `https://wa.me/2349025589011?text=${encodeURIComponent(whatsappMessage)}`;
+                    window.open(whatsappUrl, '_blank');
+                    
+                    // Show success message with animation
+                    showSuccessMessage(contactData);
+                    
+                    // Reset form
+                    contactForm.reset();
+                });
+            }
+        });
+        
+        function validateContactForm() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value.trim();
+            const submitButton = document.getElementById('send_message');
+            
+            if (!name || !email || !phone || !subject || !message) {
+                alert('Please fill in all required fields.');
+                // Reset button if validation fails
+                submitButton.classList.remove('loading');
+                submitButton.value = 'Send Message';
+                return false;
+            }
+            
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                // Reset button if validation fails
+                submitButton.classList.remove('loading');
+                submitButton.value = 'Send Message';
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function createWhatsAppMessage(data) {
+            return `🦷 *CONTACT MESSAGE FROM WEBSITE*
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 *Name:* ${data.name}
+📧 *Email:* ${data.email}
+📱 *Phone:* ${data.phone}
+📋 *Subject:* ${data.subject}
+
+💬 *Message:*
+${data.message}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+⏰ Sent: ${new Date().toLocaleString()}
+🌐 Source: Homepage Contact Form`;
+        }
+        
+        function showSuccessMessage(contactData) {
+            const successPanel = document.getElementById('success_message_col');
+            const contactFormDiv = document.querySelector('.whatsapp-contact-form');
+            
+            successPanel.innerHTML = `
+                <div class="text-center compact-success-panel animate-fadeInUp">
+                    <div class="success-icon">✅</div>
+                    <h3 class="compact-title">Message Sent! 🎉</h3>
+                    <p class="compact-subtitle">Opening WhatsApp...</p>
+                    <div class="compact-info">
+                        <span class="info-item">${contactData.name}</span> • 
+                        <span class="info-item">${contactData.subject}</span>
+                    </div>
+                </div>
+            `;
+            
+            successPanel.style.display = 'block';
+            contactFormDiv.style.display = 'none';
+        }
+        
+        function checkReturningUser() {
+            const contactSent = localStorage.getItem('homepageContactSent');
+            const contactData = localStorage.getItem('homepageContactData');
+            
+            if (contactSent && contactData) {
+                const data = JSON.parse(contactData);
+                const sentTime = new Date(data.timestamp);
+                const now = new Date();
+                const timeDiff = (now - sentTime) / (1000 * 60); // difference in minutes
+                
+                // Show returning user message for 30 minutes
+                if (timeDiff < 30) {
+                    const successPanel = document.getElementById('success_message_col');
+                    const contactFormDiv = document.querySelector('.whatsapp-contact-form');
+                    
+                    successPanel.innerHTML = `
+                        <div class="text-center compact-success-panel welcome-back animate-fadeInUp">
+                            <div class="success-icon">👋</div>
+                            <h3 class="compact-title">Welcome Back! 😊</h3>
+                            <p class="compact-subtitle">We got your message about "${data.subject}"</p>
+                            <div class="compact-info">
+                                <span class="info-item">${data.name}</span> <br> 
+                                <span class="info-item">We'll respond soon!</span>
+                            </div>
+                            <div class="compact-actions">
+                                <button onclick="clearHomepageContactStatus()" class="compact-btn">
+                                    ✉️ New Message
+                                </button>
+                                <a class="compact-btn" href="tel:+2349025589011">
+                                    📞 Call Now
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    successPanel.style.display = 'block';
+                    contactFormDiv.style.display = 'none';
+                }
+            }
+        }
+        
+        // Function to clear contact status and show form again
+        window.clearHomepageContactStatus = function() {
+            localStorage.removeItem('homepageContactSent');
+            localStorage.removeItem('homepageContactData');
+            document.getElementById('success_message_col').style.display = 'none';
+            document.querySelector('.whatsapp-contact-form').style.display = 'block';
+            
+            // Reset form
+            document.getElementById('contact_form').reset();
+            
+            // Scroll to form
+            document.querySelector('.whatsapp-contact-form').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+    </script>
 
 <script src="js/component-loader.js"></script>
 </body>
